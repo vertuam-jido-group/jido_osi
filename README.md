@@ -6,24 +6,27 @@ para veículo autônomo, validado em silício real numa **Raspberry Pi 4** (BCM2
 Este repositório existe só pra distribuir a imagem já compilada, pra quem quiser
 baixar e testar numa RPi4. O código-fonte completo é privado.
 
-## O que já está validado no hardware (v1.2.0)
+## O que já está validado no hardware (v1.3.0)
 
 - Boot bare-metal (EL2→EL1), MMU, GICv2, SMP (4 cores)
 - Pipeline crítico em EL0 (percepção → controle → SafetyMonitor → atuadores) + safe-stop
-- WCET medido no Cortex-A72 real (single-core e multi-core)
+- WCET medido no Cortex-A72 real (single-core e multi-core), clock fixado e medido pela placa
 - Storage persistente (JidoFS numa partição dedicada do SD/EMMC)
+- Imagem carrega o SHA-256 de si mesma (build-id), rastreável a esta release
+- Baseline de certificação (IEC 61508): fronteira do TCB medida, campanha de injeção de
+  falhas, MC/DC 100% sobre o núcleo crítico, primeira inspeção formal registrada
 
 ## Como testar
 
 ### 1. Baixe
 
-- `jido_os_rpi4_vv1.2.0.img.gz`
-- `jido_os_rpi4_vv1.2.0.img.gz.sha256`
+- `jido_os_rpi4_vv1.3.0.img.gz`
+- `jido_os_rpi4_vv1.3.0.img.gz.sha256`
 
 ### 2. Confira a integridade
 
 ```sh
-shasum -a 256 -c jido_os_rpi4_vv1.2.0.img.gz.sha256
+shasum -a 256 -c jido_os_rpi4_vv1.3.0.img.gz.sha256
 ```
 
 ### 3. Grave no cartão SD
@@ -34,11 +37,11 @@ shasum -a 256 -c jido_os_rpi4_vv1.2.0.img.gz.sha256
 **Linha de comando:**
 
 ```sh
-gunzip jido_os_rpi4_vv1.2.0.img.gz
+gunzip jido_os_rpi4_vv1.3.0.img.gz
 # macOS (diskutil list p/ achar o device; diskutil unmountDisk antes):
-sudo dd if=jido_os_rpi4_vv1.2.0.img of=/dev/rdiskN bs=4m status=progress
+sudo dd if=jido_os_rpi4_vv1.3.0.img of=/dev/rdiskN bs=4m status=progress
 # Linux:
-sudo dd if=jido_os_rpi4_vv1.2.0.img of=/dev/sdX bs=4M status=progress
+sudo dd if=jido_os_rpi4_vv1.3.0.img of=/dev/sdX bs=4M status=progress
 ```
 
 ### 4. Ligue a Raspberry Pi 4
